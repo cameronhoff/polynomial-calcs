@@ -74,6 +74,8 @@ class Ui_mod_calculations(object):
         self.pol_rweb_input = QtWidgets.QLineEdit(self.tab_2)
         self.pol_rweb_input.setGeometry(QtCore.QRect(160, 140, 611, 21))
         self.pol_rweb_input.setObjectName("pol_rweb_input")
+        # added
+        self.pol_rweb_input.textChanged.connect(lambda: self.on_change_rweb_pol)
         self.calc_rweb_button = QtWidgets.QPushButton(self.tab_2)
         self.calc_rweb_button.setGeometry(QtCore.QRect(330, 170, 111, 41))
         self.calc_rweb_button.setObjectName("calc_rweb_button")
@@ -163,22 +165,32 @@ class Ui_mod_calculations(object):
         self.pol_fstep_deg_value_2.setGeometry(QtCore.QRect(190, 60, 131, 21))
         self.pol_fstep_deg_value_2.setText("")
         self.pol_fstep_deg_value_2.setObjectName("pol_fstep_deg_value_2")
+        # added
+        self.pol2_fstep_input.textChanged.connect(lambda: self.change_deg(2))
         self.pol_fstep_deg_value_3 = QtWidgets.QLabel(self.tab_3)
         self.pol_fstep_deg_value_3.setGeometry(QtCore.QRect(190, 110, 131, 21))
         self.pol_fstep_deg_value_3.setText("")
         self.pol_fstep_deg_value_3.setObjectName("pol_fstep_deg_value_3")
+        # added
+        self.pol3_fstep_input.textChanged.connect(lambda: self.change_deg(3)) 
         self.pol_fstep_deg_value_4 = QtWidgets.QLabel(self.tab_3)
         self.pol_fstep_deg_value_4.setGeometry(QtCore.QRect(190, 160, 121, 21))
         self.pol_fstep_deg_value_4.setText("")
         self.pol_fstep_deg_value_4.setObjectName("pol_fstep_deg_value_4")
+        # added 
+        self.pol4_fstep_input.textChanged.connect(lambda: self.change_deg(4))
         self.pol_fstep_deg_value_5 = QtWidgets.QLabel(self.tab_3)
         self.pol_fstep_deg_value_5.setGeometry(QtCore.QRect(190, 210, 131, 21))
         self.pol_fstep_deg_value_5.setText("")
         self.pol_fstep_deg_value_5.setObjectName("pol_fstep_deg_value_5")
+        # added
+        self.pol5_fstep_input.textChanged.connect(lambda: self.change_deg(5))
         self.pol_fstep_deg_value_6 = QtWidgets.QLabel(self.tab_3)
         self.pol_fstep_deg_value_6.setGeometry(QtCore.QRect(200, 260, 121, 21))
         self.pol_fstep_deg_value_6.setText("")
         self.pol_fstep_deg_value_6.setObjectName("pol_fstep_deg_value_6")
+        # added
+        self.pol6_fstep_input.textChanged.connect(lambda: self.change_deg(6))
         self.tabWidget.addTab(self.tab_3, "")
         self.author_label = QtWidgets.QLabel(self.centralwidget)
         self.author_label.setGeometry(QtCore.QRect(20, 460, 301, 21))
@@ -380,11 +392,11 @@ class Ui_mod_calculations(object):
     def change_deg(self, n):
         pol_deg_labels = [
             self.pol_fstep_deg_value_1,
-            #self.pol_fstep_deg_value_2,
-            #self.pol_fstep_deg_value_3,
-            #self.pol_fstep_deg_value_4,
-            #self.pol_fstep_deg_value_5,
-            #self.pol_fstep_deg_value_6
+            self.pol_fstep_deg_value_2,
+            self.pol_fstep_deg_value_3,
+            self.pol_fstep_deg_value_4,
+            self.pol_fstep_deg_value_5,
+            self.pol_fstep_deg_value_6
         ]
         pol_inputs = [
             self.pol1_fstep_input,
@@ -396,7 +408,11 @@ class Ui_mod_calculations(object):
         ]
         for i in range(len(pol_deg_labels)):
             if i == n-1:
-                pol_deg_labels[i].setText(str(len(pol_inputs[i].text())))
+                if (len(pol_inputs[i].text()) - 1) >= 0:
+                    pol_deg_labels[i].setText(str(len(pol_inputs[i].text()) - 1))
+
+    def on_change_rweb_pol(self):
+        self.pol_deg_input.setText(str(len(self.pol_rweb_input.text()) - 1))
 
 if __name__ == "__main__":
     import sys
